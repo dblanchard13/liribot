@@ -38,6 +38,10 @@ function getMyTweets(){
           access_token_key:keys.twitterKeys.access_token_key,
           access_token_secret:keys.twitterKeys.access_token_secret 
       })
+  // since keys.twitterKeys has the exact key values you want to pass to 
+  // the twitter client, you could simply instantiate the client like so:
+  // var client = new Twitter( keys.twitterKeys )
+
   var params = {BWCollins82: 'nodejs'};
 
   	client.get('statuses/user_timeline', params, function(error, myTweets, response){
@@ -79,6 +83,9 @@ function getSongInfo(search){
 
 
 function getMovieInfo(){
+  // another way to default a value:
+  // search = search || 'Mr Nobody'
+
 	if (search === undefined) {
     	search = "Mr Nobody";  
 	}
@@ -100,6 +107,9 @@ function getMovieInfo(){
  
 
 function getRandom(action, search){
+  // I think you're meaning to check whether action is equal to any of 'my-tweets', "spotify-this-song" + search, or "movie-this" + search
+  // but this only checkes whether action is equal to 'my-tweets' then it checks to see if "spotify-this-song" + search is a
+  // truthy value (which it is) and then it executes the readfile call.
 	if(action === "my-tweets" || "spotify-this-song" + search || "movie-this" + search){
 		fs.readFile("random.txt", "utf8", function(error, data, search) {
  		var data
@@ -107,6 +117,9 @@ function getRandom(action, search){
    		
    		var action = commands[0]
    		var search = commands[1]
+      // so if you put the switch statement at the top of this file into a function that accepted 
+      // action and search as parameters, you could just call it here and run whatever the 
+      // random action defined in random.txt happened to be.
    		console.log(action + " " + search)
    		//getMovieInfo(search)
    		
